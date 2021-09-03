@@ -13,6 +13,7 @@
         "laravel/tinker": "^2.5"
     },
     "require-dev": {
+        "blumilksoftware/codestyle": "^0.4.3",
         "facade/ignition": "^2.5",
         "fakerphp/faker": "^1.9.1",
         "laravel/sail": "^1.0.1",
@@ -45,7 +46,9 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
-        ]
+        ],
+        "ecs": "./vendor/bin/ecs check",
+        "ecsf": "./vendor/bin/ecs check --fix"
     },
     "extra": {
         "laravel": {
