@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProductRequest;
 use App\Models\Product;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -38,38 +40,37 @@ class ProductController extends Controller
      *     )
      * )
      */
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
         $product = new Product();
-        $product->name = $request->name;
-        $product->description = $request->description;
-        $product->price = $request->price;
-        $product->currency = $request->currency;
+        $this->setProduct($product, $request);
         $result = $product->save();
 
         if ($result) {
-            return ["Result" => "Product has been added"];
-        } else {
-            return ["Result" => "Add operation failed"];
+            return [
+                "Result" => "Product has been added",
+            ];
         }
+        return [
+            "Result" => "Add operation failed",
+        ];
     }
 
-    public function update(Request $request, $id)
+    public function update(ProductRequest $request, $id)
     {
         $product = Product::query()->findOrFail($id);
-        $product->name = $request->name;
-        $product->description = $request->description;
-        $product->price = $request->price;
-        $product->currency = $request->currency;
+        $this->setProduct($product, $request);
         $result = $product->save();
 
         if ($result) {
-            return ["Result" => "Product has been updated"];
-        } else {
-            return ["Result" => "Add operation failed"];
+            return [
+                "Result" => "Product has been updated",
+            ];
         }
+        return [
+            "Result" => "Add operation failed",
+        ];
     }
-
 
     public function destroy($id)
     {
@@ -77,9 +78,20 @@ class ProductController extends Controller
         $result = $product->delete();
 
         if ($result) {
-            return ["Result" => "Product has been deleted"];
-        } else {
-            return ["Result" => "Delete operation failed"];
+            return [
+                "Result" => "Product has been deleted",
+            ];
         }
+        return [
+            "Result" => "Delete operation failed",
+        ];
+    }
+
+    private function setProduct($product, Request $request): void
+    {
+        $product->name = $request->name;
+        $product->description = $request->description;
+        $product->price = $request->price;
+        $product->currency = $request->currency;
     }
 }
