@@ -10,6 +10,60 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+    /**
+     * @OA\Get(
+     * path="/api/products/",
+     * summary="List of products",
+     * description="Get list of produtcts",
+     * operationId="getProdutcts",
+     * tags={"Products"},
+     * @OA\Response(
+     *    response=200,
+     *    description="Success",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="id", type="number", example="1"),
+     *       @OA\Property(property="name", type="string", example="Potato"),
+     *       @OA\Property(property="description", type="string", example="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam"),
+     *       @OA\Property(property="price", type="float", example="123.45"),
+     *       @OA\Property(property="currency", type="string", example="PLN"),
+     *       )
+     *    )
+     * )
+     * )
+     */
+    /**
+     * @OA\Get(
+     * path="/api/products/{id}",
+     * summary="Details of a product",
+     * description="Get one of products",
+     * operationId="getProduct",
+     * tags={"Products"},
+     * @OA\Parameter(
+     *    description="ID of a product",
+     *    in="path",
+     *    name="id",
+     *    required=false,
+     *    example="1",
+     *    @OA\Schema(
+     *       type="integer",
+     *       format="int64"
+     *    )
+     * ),
+     * @OA\Response(
+     *    response=200,
+     *    description="Success",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="id", type="number", example="1"),
+     *       @OA\Property(property="name", type="string", example="Potato"),
+     *       @OA\Property(property="description", type="string", example="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam"),
+     *       @OA\Property(property="price", type="float", example="123.45"),
+     *       @OA\Property(property="currency", type="string", example="PLN"),
+     *       )
+     *    )
+     * )
+     * )
+     */
+
     public function index($id = null)
     {
         return $id ? Product::findOrFail($id) : Product::all();
@@ -56,6 +110,43 @@ class ProductController extends Controller
         ];
     }
 
+    /**
+     * @OA\Put(
+     * path="/api/products/update/{id}",
+     * summary="Update a product",
+     * description="Update one of products",
+     * operationId="updateProduct",
+     * tags={"Products"},
+     * @OA\Parameter(
+     *    description="ID of a product",
+     *    in="path",
+     *    name="id",
+     *    required=false,
+     *    example="1",
+     *    @OA\Schema(
+     *       type="integer",
+     *       format="int64"
+     *    )
+     * ),
+     * @OA\RequestBody(
+     *    @OA\JsonContent(
+     *       required={"name"},
+     *       @OA\Property(property="name", type="string", example="Potato"),
+     *       @OA\Property(property="description", type="string", example="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam"),
+     *       @OA\Property(property="price", type="float", example="123.45"),
+     *       @OA\Property(property="currency", type="string", example="PLN"),
+     *    ),
+     * ),
+     * @OA\Response(
+     *    response=200,
+     *    description="Product Added Response",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="Result", type="string", example="Product has been updated")
+     *        )
+     *     )
+     * )
+     * )
+     */
     public function update(ProductRequest $request, $id)
     {
         $product = Product::query()->findOrFail($id);
@@ -72,6 +163,34 @@ class ProductController extends Controller
         ];
     }
 
+    /**
+     * @OA\Delete(
+     * path="/api/products/delete/{id}",
+     * summary="Delete a product",
+     * description="Delete one of products",
+     * operationId="deleteProduct",
+     * tags={"Products"},
+     * @OA\Parameter(
+     *    description="ID of a product",
+     *    in="path",
+     *    name="id",
+     *    required=false,
+     *    example="1",
+     *    @OA\Schema(
+     *       type="integer",
+     *       format="int64"
+     *    )
+     * ),
+     * @OA\Response(
+     *    response=200,
+     *    description="Product Added Response",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="Result", type="string", example="Product has been deleted")
+     *        )
+     *     )
+     * )
+     * )
+     */
     public function destroy($id)
     {
         $product = Product::query()->findOrFail($id);
