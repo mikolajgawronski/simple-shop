@@ -18,6 +18,15 @@ cp .env.example .env
 ```shell script
 docker-compose up -d
 ```
+OR
+```shell script
+./vendor/bin/sail up
+```
+
+If the above commands failed then probably running the following command will fix the problem:
+```shell script
+composer install
+```
 
 ### 3. Enter the container:
 ```shell script
