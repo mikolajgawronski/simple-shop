@@ -76,7 +76,7 @@ class ProductController extends Controller
 
     public function index($id = null)
     {
-        return $id ? Product::findOrFail($id) : Product::all();
+        return $id ? Product::findOrFail($id) : Product::query()->paginate(10);
     }
 
     /**
