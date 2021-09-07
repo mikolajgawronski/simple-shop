@@ -5,11 +5,21 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductRequest;
+use App\Mail\ProductAdded;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Mail\Mailer;
 
 class ProductController extends Controller
 {
+
+    protected Mailer $mailer;
+
+    public function __construct(Mailer $mailer)
+    {
+        $this->mailer = $mailer;
+    }
+
     /**
      * @OA\Get(
      * path="/api/products/",
@@ -101,6 +111,7 @@ class ProductController extends Controller
         $result = $product->save();
 
         if ($result) {
+            //$this->sendMail($this->mailer);
             return [
                 "Result" => "Product has been added",
             ];
@@ -212,5 +223,17 @@ class ProductController extends Controller
         $product->description = $request->description;
         $product->price = $request->price;
         $product->currency = $request->currency;
+    }
+
+    private function sendMail(Mailer $mailer): void
+    {
+
+        $details = [
+            "title" => "Product Added",
+            "body" => "Thank you for adding a product to our database."
+        ];
+
+        $mailer->to("fake@example.com")->send(new ProductAdded($details));
+
     }
 }
