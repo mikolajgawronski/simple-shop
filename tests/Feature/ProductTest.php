@@ -26,7 +26,7 @@ class ProductTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function testValidationWhileCreatingProduct(): void
+    public function testValidationWithTooShortDescription(): void
     {
         $response = $this->post("/api/products/create", [
             "name" => "testing_product",

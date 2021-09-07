@@ -5,14 +5,14 @@
         "version": "1.0.0"
     },
     "paths": {
-        "/api/products/": {
+        "/api/products": {
             "get": {
                 "tags": [
                     "Products"
                 ],
                 "summary": "List of products",
-                "description": "Get list of produtcts",
-                "operationId": "getProdutcts",
+                "description": "Get all products",
+                "operationId": "getProducts",
                 "responses": {
                     "200": {
                         "description": "Success",
@@ -49,7 +49,63 @@
                 }
             }
         },
-        "/api/products/{id}": {
+        "/api/products/{sort}": {
+            "get": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "List of products",
+                "description": "Get list of products sorted by a column of your choice (ID is the default)",
+                "operationId": "getProductsSorted",
+                "parameters": [
+                    {
+                        "name": "sort",
+                        "in": "path",
+                        "description": "Sort by a column of your choice (id, name, description, price or currency)",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "name"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "number",
+                                            "example": "1"
+                                        },
+                                        "name": {
+                                            "type": "string",
+                                            "example": "Potato"
+                                        },
+                                        "description": {
+                                            "type": "string",
+                                            "example": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam"
+                                        },
+                                        "price": {
+                                            "type": "float",
+                                            "example": "123.45"
+                                        },
+                                        "currency": {
+                                            "type": "string",
+                                            "example": "PLN"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/products/show/{id}": {
             "get": {
                 "tags": [
                     "Products"
