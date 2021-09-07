@@ -12,7 +12,6 @@ use Illuminate\Mail\Mailer;
 
 class ProductController extends Controller
 {
-
     protected Mailer $mailer;
 
     public function __construct(Mailer $mailer)
@@ -74,9 +73,8 @@ class ProductController extends Controller
      */
     public function index($sort = "id")
     {
-        return Product::query()->orderBy($sort,"asc")->paginate(10);
+        return Product::query()->orderBy($sort, "asc")->paginate(10);
     }
-
 
     /**
      * @OA\Get(
@@ -263,13 +261,11 @@ class ProductController extends Controller
 
     private function sendMail(Mailer $mailer): void
     {
-
         $details = [
             "title" => "Product Added",
-            "body" => "Thank you for adding a product to our database."
+            "body" => "Thank you for adding a product to our database.",
         ];
 
         $mailer->to("fake@example.com")->send(new ProductAdded($details));
-
     }
 }

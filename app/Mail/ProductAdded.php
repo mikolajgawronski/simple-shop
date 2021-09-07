@@ -1,21 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
 class ProductAdded extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     protected $details;
     /**
      * Create a new message instance.
-     *
-     * @return void
      */
     public function __construct($details)
     {
@@ -29,6 +29,6 @@ class ProductAdded extends Mailable
      */
     public function build()
     {
-        return $this->subject("Product Added")->view('email');
+        return $this->subject("Product Added")->view("email");
     }
 }
